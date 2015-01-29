@@ -4,17 +4,23 @@
 class ChainList:List
 {
 public:
-    int listEmpty(int* firstAddress);
-    int listLength(int* firstAddress);
-    int priorElem(int* firstAddress,int number);
-    int nextElem(int* firstAddress,int number);
-    int getElem(int* firstAddress,int number);
-    int locateElem(int* firstAddress,int targetElem);
+    int listEmpty(void* firstAddress);
+    int listLength(void* firstAddress);
+    int priorElem(void* firstAddress,int number);
+    int nextElem(void* firstAddress,int number);
+    int getElem(void* firstAddress,int number);
+    void locateElem(void* firstAddress,int targetElem);
 
-    void clearList(int* firstAddress);
-    void putElem(int* firstAddress,int newElem);
-    void listInsert(int* firstAddress,int number,int newElem);
-    void listDelete(int* firstAddress,int number);
+    void clearList(void* firstAddress);
+    void putElem(void* firstAddress,int newElem);
+    void listInsert(void* firstAddress,int number,int newElem);
+    void listDelete(void* firstAddress,int number);
+
+    struct numChain
+    {
+        int member;
+       numChain* p;
+    };
 };
 
 #endif // CHAINLIST_H

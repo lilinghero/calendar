@@ -6,10 +6,9 @@ using namespace std;
     this->locate[12]={0};
 }*/
 
-int LineList::listEmpty(int *firstAddress){
+int LineList::listEmpty(void *firstAddress){
+    firstAddress=(int*) firstAddress;
     if(*firstAddress ){
-        return 1;
-    }else if( (*firstAddress) == 0){
         return 1;
     }else{
         return 0;
@@ -19,7 +18,11 @@ int LineList::listEmpty(int *firstAddress){
 int LineList::listLength(int *firstAddress){
     int length=0;
     if(this->listEmpty(firstAddress)){
-        length=sizeof(firstAddress);
+        while(*firstAddress != 0){
+            firstAddress++;
+            length++;
+            //cout<<"##"<<endl;
+        }
         return length;
     }else{
         //return 0;
@@ -79,6 +82,7 @@ void LineList::clearList(int *firstAddress){
 
 void LineList::putElem(int *firstAddress, int newElem){
     if(this->listEmpty(firstAddress) == 1){
+        *(firstAddress+this->listLength(firstAddress)+1)=0;
         *(firstAddress+this->listLength(firstAddress))=newElem;
     }
 }
@@ -88,8 +92,8 @@ void LineList::listDelete(int *firstAddress,int number){
     if(number >= 0 && number < this->listLength(firstAddress)){
         for( int i=number;i< this->listLength(firstAddress);i++){
            * (firstAddress+i)=*(firstAddress+i+1);
+            cout<<"hello"<<endl;
         }
-        *(firstAddress+this->listLength(firstAddress)-1)=0;
     }
 }
 

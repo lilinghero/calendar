@@ -5,22 +5,22 @@ class LineList:public List
 {
 public:
   // LineList();
-    int listEmpty(int* firstAddress);
-    int listLength(int* firstAddress);
-    int priorElem(int* firstAddress,int number);
-    int nextElem(int* firstAddress,int number);
-    int getElem(int* firstAddress,int number);
-    void locateElem(int* firstAddress,int targetElem);
+    int listEmpty(void* firstAddress);
+    int listLength(void* firstAddress);
+    int priorElem(void* firstAddress,int number);
+    int nextElem(void* firstAddress,int number);
+    int getElem(void* firstAddress,int number);
+    void locateElem(void* firstAddress,int targetElem);
 
-    void clearList(int* firstAddress);
-    void putElem(int* firstAddress,int newElem);
-    void listInsert(int* firstAddress,int number,int newElem);
-    void listDelete(int* firstAddress,int number);
+    void clearList(void* firstAddress);
+    void putElem(void* firstAddress,int newElem);
+    void listInsert(void* firstAddress,int number,int newElem);
+    void listDelete(void* firstAddress,int number);
      /*~LineList(){
 
     }*/
 
-    int locate[12];/*with 12 or without 12 , can chang the address of  indicator 'this'*/
+    int locate[20];/*with 12 or without 12 , can chang the address of  indicator 'this'*/
 };
 
 #endif // LINELIST_H

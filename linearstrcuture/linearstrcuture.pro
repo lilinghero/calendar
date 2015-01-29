@@ -16,7 +16,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    LineList.cpp
+    LineList.cpp \
+    ChainList.cpp
 
 HEADERS += \
     List.h \
