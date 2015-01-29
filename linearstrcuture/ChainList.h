@@ -10,7 +10,6 @@ public:
     int nextElem(int* firstAddress,int number);
     int getElem(int* firstAddress,int number);
     int locateElem(int* firstAddress,int targetElem);
-    //virtual  int listTraverse()=0;
 
     void clearList(int* firstAddress);
     void putElem(int* firstAddress,int newElem);

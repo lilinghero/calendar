@@ -2,8 +2,14 @@
 #include <iostream>
 using namespace std;
 
+/*LineList::LineList(){
+    this->locate[12]={0};
+}*/
+
 int LineList::listEmpty(int *firstAddress){
-    if(*firstAddress){
+    if(*firstAddress ){
+        return 1;
+    }else if( (*firstAddress) == 0){
         return 1;
     }else{
         return 0;
@@ -13,32 +19,33 @@ int LineList::listEmpty(int *firstAddress){
 int LineList::listLength(int *firstAddress){
     int length=0;
     if(this->listEmpty(firstAddress)){
-        while(*firstAddress){
-            length++;
-            firstAddress++;
-        }
+        length=sizeof(firstAddress);
         return length;
     }else{
-        return 0;
+        //return 0;
         cout<<"this is a empty list."<<endl;
     }
 }
 
-int LineList::locateElem(int *firstAddress, int targetElem){
-    for(int number=0;number < this->listLength(firstAddress);number++){
+void LineList::locateElem(int *firstAddress, int targetElem){
+    int locateCounter=0;
+
+    for(int  number=0;number < this->listLength(firstAddress);number++){
         if(*(firstAddress+number) == targetElem){
-            return number;
-        }else{
-            cout<<"not found your targetElem."<<endl;
-            return 0;
+            this->locate[locateCounter]=number;
+            locateCounter++;
+            //cout<<"$$$$$$$$$$$$$$$$$$"<<endl;
         }
     }
+     if(!locateCounter){
+         cout<<"not found your targetElem."<<endl;
+     }
 }
 
 int LineList::priorElem(int *firstAddress, int number){
     if(number <= 0||number >= this->listLength(firstAddress)){
         cout<<"this is the frist element, or your number out of the length."<<endl;
-        return 0;
+        //return 0;
     }else{
        return *(firstAddress+number-1);
     }
@@ -47,7 +54,7 @@ int LineList::priorElem(int *firstAddress, int number){
 int LineList::nextElem(int *firstAddress, int number){
     if(number < 0 || number >= (this->listLength(firstAddress)-1)){;
         cout<<"this is the last element, or your number is < 0. "<<endl;
-        return 0;
+        //return 0;
     }else{
         return *(firstAddress+number+1);
     }
@@ -58,13 +65,13 @@ int LineList::getElem(int *firstAddress, int number){
         return *(firstAddress+number);
     }else{
         cout<<"your number out scope of the list."<<endl;
-        return 0;
+        //return 0;
     }
 }
 
 void LineList::clearList(int *firstAddress){
     if(this->listEmpty(firstAddress) == 1){
-        for(int i=0;i<this->listLength(firstAddress);i++){
+        for(int i=this->listLength(firstAddress)-1;i >= 0;i--){
             *(firstAddress+i)=0;
         }
     }
@@ -77,6 +84,7 @@ void LineList::putElem(int *firstAddress, int newElem){
 }
 
 void LineList::listDelete(int *firstAddress,int number){
+    cout<<this->listLength(firstAddress)<<endl;
     if(number >= 0 && number < this->listLength(firstAddress)){
         for( int i=number;i< this->listLength(firstAddress);i++){
            * (firstAddress+i)=*(firstAddress+i+1);
