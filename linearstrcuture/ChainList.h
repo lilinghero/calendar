@@ -16,11 +16,15 @@ public:
     void listInsert(void* firstAddress,int number,int newElem);
     void listDelete(void* firstAddress,int number);
 
+    //struct numChain* listVisit(struct numChain *currentAddress);
+
+
     struct numChain
     {
-        int member;
-       numChain* p;
+       int member;
+       numChain* nextp;
     };
+    int locate[12];
 };
 
 #endif // CHAINLIST_H
