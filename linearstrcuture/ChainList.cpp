@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+
 int ChainList::listEmpty(void*firstAddress){
     numChain * firstPoint=reinterpret_cast<numChain*>(firstAddress);
     if(firstPoint->member ){
@@ -28,6 +29,7 @@ void ChainList::locateElem(void* firstAddress,int targetElem){
     while(1){
         if(firstPoint->member == targetElem){
             this->locate[locateCounter]=chainCounter;
+            cout<<locateCounter<<"--->"<<this->locate[locateCounter]<<endl;
             locateCounter++;
         }
         chainCounter++;
@@ -44,7 +46,7 @@ void ChainList::locateElem(void* firstAddress,int targetElem){
 int ChainList::getElem(void *firstAddress, int number){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
     int counter=0;
-    if(number <= this->listLength(firstAddress) && number > 0){
+    if(number <= this->listLength(firstAddress) && number >= 0){
        while(1){
             if(number == counter){
                 return firstPoint->member;
@@ -93,11 +95,19 @@ int ChainList::nextElem(void *firstAddress, int number){
 
 void ChainList::clearList(void *firstAddress){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
+
     if(firstPoint->nextp->nextp == NULL){
         delete firstPoint->nextp;
         firstPoint->nextp=NULL;
+        sum=0;
     }else {
+        this->sum++;
+        cout<<"--->"<<firstPoint->member<<"---->"<<sum<<endl;
         this->clearList(firstPoint->nextp);
+        if(sum == 0){
+            delete firstPoint->nextp;
+            firstPoint->nextp=NULL;
+        }
     }
 }
 
@@ -129,6 +139,7 @@ void ChainList::putElem(void *firstAddress, int newElem){
         if(firstPoint->nextp == NULL){
             numChain *newMem=new numChain;
             firstPoint->nextp=newMem;
+            newMem->member=newElem;
             newMem->nextp=NULL;
             break;
         }

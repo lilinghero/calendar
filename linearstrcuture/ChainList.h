@@ -1,9 +1,13 @@
 #ifndef CHAINLIST_H
 #define CHAINLIST_H
 #include "List.h"
-class ChainList:List
+class ChainList:public List
 {
 public:
+    ChainList (){
+        this->sum=0;
+    }
+
     int listEmpty(void* firstAddress);
     int listLength(void* firstAddress);
     int priorElem(void* firstAddress,int number);
@@ -19,12 +23,14 @@ public:
     //struct numChain* listVisit(struct numChain *currentAddress);
 
 
-    struct numChain
+    class numChain
     {
+    public:
        int member;
        numChain* nextp;
     };
     int locate[12];
+    int sum;
 };
 
 #endif // CHAINLIST_H
