@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+const int Calculate::standarWeek[]={6,2,2,5,7,3,5,1,4,6,2,4};
+
 int Calculate::recursiveFirstDate(int year, int month){
 
         if(month <= 2){

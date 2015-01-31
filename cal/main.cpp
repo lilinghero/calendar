@@ -5,7 +5,7 @@
 #include "Ui.h"
 using namespace std;
 
-const int Calculate::standarWeek[]={6,2,2,5,7,3,5,1,4,6,2,4};
+
 
 int main()
 {

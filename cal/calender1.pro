@@ -17,8 +17,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     Calculate.cpp \
-    Ui.cpp
+    Ui.cpp \
+    Note.cpp
 
 HEADERS += \
     Calculate.h \
-    Ui.h
+    Ui.h \
+    Note.h
