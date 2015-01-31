@@ -17,9 +17,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     LineList.cpp \
-    ChainList.cpp
+    ChainList.cpp \
+    Sorting.cpp
 
 HEADERS += \
     List.h \
     LineList.h \
-    ChainList.h
+    ChainList.h \
+    Sorting.h

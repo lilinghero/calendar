@@ -4,9 +4,7 @@
 class ChainList:public List
 {
 public:
-    ChainList (){
-        this->sum=0;
-    }
+
 
     int listEmpty(void* firstAddress);
     int listLength(void* firstAddress);
@@ -20,7 +18,9 @@ public:
     void listInsert(void* firstAddress,int number,int newElem);
     void listDelete(void* firstAddress,int number);
 
-    //struct numChain* listVisit(struct numChain *currentAddress);
+    void replaceElem(void* firstAddress,int number,int replacedValue);
+    void  swapElem(void* firstAddress,int positionA,int positionB);
+
 
 
     class numChain
@@ -30,7 +30,6 @@ public:
        numChain* nextp;
     };
     int locate[12];
-    int sum;
 };
 
 #endif // CHAINLIST_H

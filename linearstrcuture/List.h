@@ -16,5 +16,9 @@ public:
     virtual void listInsert(void* firstAddress,int number,int newElem)=0;
     virtual void listDelete(void* firstAddress,int number)=0;
 
+    virtual void replaceElem(void* firstAddress,int number,int replacedValue)=0;
+    virtual void  swapElem(void* firstAddress,int positionA,int positionB)=0;
+
+
 };
 #endif // LIST_H

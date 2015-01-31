@@ -25,16 +25,12 @@ int ChainList::listLength(void* firstAddress){
 }
 void ChainList::locateElem(void* firstAddress,int targetElem){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
-    int chainCounter=0,locateCounter=0;
-    while(1){
+    int locateCounter=0;
+
+    for(int chainCounter=0;chainCounter <= this->listLength(firstAddress);chainCounter++ ){
         if(firstPoint->member == targetElem){
             this->locate[locateCounter]=chainCounter;
-            cout<<locateCounter<<"--->"<<this->locate[locateCounter]<<endl;
             locateCounter++;
-        }
-        chainCounter++;
-        if(firstPoint->nextp == NULL){
-            break;
         }
         firstPoint=firstPoint->nextp;
     }
@@ -45,50 +41,49 @@ void ChainList::locateElem(void* firstAddress,int targetElem){
 
 int ChainList::getElem(void *firstAddress, int number){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
-    int counter=0;
+
     if(number <= this->listLength(firstAddress) && number >= 0){
-       while(1){
+       for(int counter=0;counter <= this->listLength(firstAddress);counter++ ){
             if(number == counter){
+                //cout<<firstPoint->member<<"pppppppppppppppppp"<<endl;
                 return firstPoint->member;
+
             }
-            counter++;
             firstPoint=firstPoint->nextp;
         }
     }else{
-        cout<<"your number out scope of the list."<<endl;
+        cout<<"your number out scope of the list.((((("<<endl;
         //return 0;
     }
 }
 int ChainList::priorElem(void *firstAddress, int number){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
-    int counter=0;
+
     if(number <= this->listLength(firstAddress) && number>0){
-        while(1){
+        for(int counter=0;counter <= this->listLength(firstAddress);counter++ ){
             if(number-counter == 1){
                 return firstPoint->member;
             }
-            counter++;
             firstPoint=firstPoint->nextp;
         }
     }else{
-        cout<<"your number out scope of the list."<<endl;
+        cout<<"your number out scope of the list.*****"<<endl;
         //return 0;
     }
 }
 
 int ChainList::nextElem(void *firstAddress, int number){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
-    int counter=0;
+
     if(number < this->listLength(firstAddress) && number>=0){
-        while(1){
+        for(int counter=0;counter <= this->listLength(firstAddress);counter++ ){
             if(number-counter == -1){
                 return firstPoint->member;
             }
-            counter++;
             firstPoint=firstPoint->nextp;
         }
     }else{
-        cout<<"your number out scope of the list."<<endl;
+        cout<<"your number out scope of the list.%%%%%"<<endl;
         //return 0;
     }
 }
@@ -96,38 +91,33 @@ int ChainList::nextElem(void *firstAddress, int number){
 void ChainList::clearList(void *firstAddress){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
 
-    if(firstPoint->nextp->nextp == NULL){
-        delete firstPoint->nextp;
-        firstPoint->nextp=NULL;
-        sum=0;
+    if(firstPoint->nextp == NULL){
+        cout<<"-------------->"<<firstPoint->member<<endl;
+        delete firstPoint;
     }else {
-        this->sum++;
-        cout<<"--->"<<firstPoint->member<<"---->"<<sum<<endl;
+        cout<<"-------------->"<<firstPoint->member<<endl;
         this->clearList(firstPoint->nextp);
-        if(sum == 0){
-            delete firstPoint->nextp;
-            firstPoint->nextp=NULL;
-        }
+        firstPoint->nextp=NULL;
+        delete firstPoint;
     }
 }
 
 void ChainList::listDelete(void *firstAddress, int number){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
-    int counter=0;
     numChain *p;
+
     if(number <= this->listLength(firstAddress) && number>0){
-        while(1){
+        for(int counter=0;counter <= this->listLength(firstAddress);counter++ ){
             if(number-counter == 1){
                 p=firstPoint->nextp;
                 firstPoint->nextp=firstPoint->nextp->nextp;
                 delete p;
                 break;
             }
-            counter++;
             firstPoint=firstPoint->nextp;
         }
     }else{
-        cout<<"your number out scope of the list."<<endl;
+        cout<<"your number out scope of the list.####"<<endl;
         //return 0;
     }
 }
@@ -149,9 +139,8 @@ void ChainList::putElem(void *firstAddress, int newElem){
 
 void ChainList::listInsert(void *firstAddress, int number, int newElem){
     numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
-    int counter=0;
 
-    while(1){
+    for(int counter=0;counter <= this->listLength(firstAddress);counter++ ){
         if(number == counter){
             numChain *newMem=new numChain;
             newMem->member=newElem;
@@ -159,28 +148,33 @@ void ChainList::listInsert(void *firstAddress, int number, int newElem){
             firstPoint->nextp=newMem;
             break;
         }
-         counter++;
         firstPoint=firstPoint->nextp;
     }
 }
 
-/*ChainList::numChain* listVisit(ChainList::numChain* currentAddress){
-      while(currentAddress->nextp != NULL){
-            currentAddress=currentAddress->nextp;
-      }
-      return currentAddress;
-}*.
+void ChainList::replaceElem(void *firstAddress, int number, int replacedValue){
+    numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
 
-
-
-
-/*void ChainList::putElem(void *firstAddress, int newElem){
-    numChain * firstPoint=reinterpret_cast<numChain*>(firstAddress);
-    if(this->listEmpty(firstPoint) == 1){
-        numChain *P= new numChain;
-
-        *(firstPoint+this->listLength(firstPoint)+1)=0;
-        *(firstPoint+this->listLength(firstPoint))=newElem;
+    if(number <= this->listLength(firstAddress) && number >= 0){
+        for(int counter=0;counter <= this->listLength(firstAddress);counter++ ){
+            if(number == counter){
+                firstPoint->member=replacedValue;
+                break;
+            }
+            firstPoint=firstPoint->nextp;
+        }
+    }else{
+        cout<<"your number out scope of the list.!!!!!!!"<<endl;
+        //return 0;
     }
-}*/
+}
+
+void ChainList::swapElem(void *firstAddress, int positionA, int positionB){
+    numChain* firstPoint=reinterpret_cast<numChain*>(firstAddress);
+    if(positionA >=0 && positionA <this->listLength(firstPoint) && positionB >= 0 && positionB <= this->listLength(firstPoint)){
+        int swapSpace=this->getElem(firstPoint,positionA);
+        this->replaceElem(firstPoint,positionA,this->getElem(firstPoint,positionB));
+        this->replaceElem(firstAddress,positionB,swapSpace);
+    }
+}
 

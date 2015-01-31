@@ -4,7 +4,7 @@
 class LineList:public List
 {
 public:
-  // LineList();
+
     int listEmpty(void* firstAddress);
     int listLength(void* firstAddress);
     int priorElem(void* firstAddress,int number);
@@ -16,9 +16,9 @@ public:
     void putElem(void* firstAddress,int newElem);
     void listInsert(void* firstAddress,int number,int newElem);
     void listDelete(void* firstAddress,int number);
-     /*~LineList(){
 
-    }*/
+    void replaceElem(void* firstAddress,int number,int replacedValue);
+    void  swapElem(void* firstAddress,int positionA,int positionB);
 
     int locate[20];/*with 12 or without 12 , can chang the address of  indicator 'this'*/
 };

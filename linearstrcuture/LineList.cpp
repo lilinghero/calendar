@@ -26,7 +26,7 @@ int LineList::listLength(void *firstAddress){
             length++;
             //cout<<"##"<<endl;
         }
-        return length;
+        return length-1;
     }else{
         //return 0;
         cout<<"this is a empty list."<<endl;
@@ -38,7 +38,7 @@ void LineList::locateElem(void *firstAddress, int targetElem){
 
     int *firstPoint=reinterpret_cast<int *>(firstAddress);
 
-    for(int  number=0;number < this->listLength(firstPoint);number++){
+    for(int  number=0;number <= this->listLength(firstAddress);number++){
         if(*(firstPoint+number) == targetElem){
             this->locate[locateCounter]=number;
             locateCounter++;
@@ -52,7 +52,7 @@ void LineList::locateElem(void *firstAddress, int targetElem){
 
 int LineList::priorElem(void *firstAddress, int number){
     int *firstPoint=reinterpret_cast<int*>(firstAddress);
-    if(number <= 0||number >= this->listLength(firstPoint)){
+    if(number <= 0||number > this->listLength(firstPoint)){
         cout<<"this is the frist element, or your number out of the length."<<endl;
         //return 0;
     }else{
@@ -63,8 +63,8 @@ int LineList::priorElem(void *firstAddress, int number){
 int LineList::nextElem(void *firstAddress, int number){
     int* firstPoint=reinterpret_cast<int*>(firstAddress);
 
-    if(number < 0 || number >= (this->listLength(firstPoint)-1)){;
-        cout<<"this is the last element, or your number is < 0. "<<endl;
+    if(number < 0 || number >= (this->listLength(firstPoint))){;
+        cout<<"this is the last element, or your number is  out of the length"<<endl;
         //return 0;
     }else{
         return *(firstPoint+number+1);
@@ -74,10 +74,10 @@ int LineList::nextElem(void *firstAddress, int number){
 int LineList::getElem(void *firstAddress, int number){
     int * firstPoint=reinterpret_cast<int*>(firstAddress);
 
-    if(number >= 0 && number <(this->listLength(firstPoint))){
+    if(number >= 0 && number <= (this->listLength(firstAddress))){
         return *(firstPoint+number);
     }else{
-        cout<<"your number out scope of the list."<<endl;
+        cout<<"your number out scope of the list.!!!!!!!!!!!!!!!!!!!!"<<endl;
         //return 0;
     }
 }
@@ -86,7 +86,7 @@ void LineList::clearList(void *firstAddress){
     int* firstPoint=reinterpret_cast<int*>(firstAddress);
 
     if(this->listEmpty(firstPoint) == 1){
-        for(int i=this->listLength(firstPoint)-1;i >= 0;i--){
+        for(int i=this->listLength(firstPoint);i >= 0;i--){
             *(firstPoint+i)=0;
         }
     }
@@ -95,16 +95,16 @@ void LineList::clearList(void *firstAddress){
 void LineList::putElem(void *firstAddress, int newElem){
     int * firstPoint=reinterpret_cast<int*>(firstAddress);
     if(this->listEmpty(firstPoint) == 1){
-        *(firstPoint+this->listLength(firstPoint)+1)=0;
-        *(firstPoint+this->listLength(firstPoint))=newElem;
+        *(firstPoint+this->listLength(firstPoint)+2)=0;
+        *(firstPoint+this->listLength(firstPoint)+1)=newElem;
     }
 }
 
 void LineList::listDelete(void*firstAddress,int number){
     int *firstPoint=reinterpret_cast<int*>(firstAddress);
     //cout<<this->listLength(firstAddress)<<endl;
-    if(number >= 0 && number < this->listLength(firstPoint)){
-        for( int i=number;i< this->listLength(firstPoint);i++){
+    if(number >= 0 && number <= this->listLength(firstAddress)){
+        for( int i=number;i<= this->listLength(firstAddress);i++){
            * (firstPoint+i)=*(firstPoint+i+1);
             cout<<"hello"<<endl;
         }
@@ -114,10 +114,25 @@ void LineList::listDelete(void*firstAddress,int number){
 void LineList::listInsert(void *firstAddress, int number,int newElem){
     int *firstPoint=reinterpret_cast<int*>(firstAddress);
 
-    if(number >= 0 && number < this->listLength(firstPoint)){
+    if(number >= 0 && number <= this->listLength(firstPoint)){
         for(int i=this->listLength(firstPoint);i > number;i--){
             *(firstPoint+i+1)=*(firstPoint+i);
         }
         *(firstPoint+number+1)=newElem;
     }
+}
+
+void LineList::replaceElem(void *firstAddress, int number, int replacedValue){
+    int *firstPoint=reinterpret_cast<int*>(firstAddress);
+    *(firstPoint+number)=replacedValue;
+}
+
+void LineList::swapElem(void *firstAddress, int positionA, int positionB){
+    int *firstPoint=reinterpret_cast<int*>(firstAddress);
+    if(positionA >=0 && positionA <= this->listLength(firstPoint) && positionB >= 0 && positionB <= this->listLength(firstPoint)){
+        int swapSpace=this->getElem(firstPoint,positionA);
+        this->replaceElem(firstPoint,positionA,this->getElem(firstPoint,positionB));
+        this->replaceElem(firstAddress,positionB,swapSpace);
+    }
+
 }
