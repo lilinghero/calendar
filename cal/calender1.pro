@@ -18,9 +18,13 @@ TEMPLATE = app
 SOURCES += main.cpp \
     Calculate.cpp \
     Ui.cpp \
-    Note.cpp
+    Note.cpp \
+    Date.cpp \
+    SimpleMsg.cpp
 
 HEADERS += \
     Calculate.h \
     Ui.h \
-    Note.h
+    Note.h \
+    Date.h \
+    SimpleMsg.h
