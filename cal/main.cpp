@@ -3,6 +3,7 @@
 #include <iomanip>
 #include "Calculate.h"
 #include "Ui.h"
+#include "Note.h"
 using namespace std;
 
 

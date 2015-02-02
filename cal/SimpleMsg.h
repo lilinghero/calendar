@@ -7,21 +7,23 @@ class SimpleMsg
 public:
 
     SimpleMsg();
-
+    //================================
     int emptyListSimpeMsg(SimpleMsg* firstAddress);
     SimpleMsg* visitListSimpeMsg(SimpleMsg* firstAddress);
     int lengthList(SimpleMsg* firstAddress);
-
+    //================================
     SimpleMsg* locateListSimpeMsg(SimpleMsg* firstAddress,int numberMsgList);
     SimpleMsg* locatePriorListSimpeMsg(SimpleMsg* firstAddress,int numberMsgList);
-
+    //================================
     void* getDateAddress(SimpleMsg* firstAddress,int numberMsgList);
-    int targetDateAddress(void* targetAddress);
-    void deleDateAddress(int number);
-    int locateDateAddress();
-
-    SimpleMsg* newSimpleMsgElem(SimpleMsg* firstAddress,SimpleMsg* headAddress,int numberMsgList);
-    SimpleMsg* newSimpleMsgElem(SimpleMsg* firstAddress,SimpleMsg* headAddress,int numberMsgList,void* addressMsg);
+    int targetDateAddress(SimpleMsg* targetAddress,void* dateAddress);
+    void deleDateAddress(SimpleMsg* targetAddress, int number);
+    int locateDateAddress(SimpleMsg* targetAddress);
+    //================================
+    int getMsgPosition(string siMsg);
+    //================================
+    SimpleMsg* newSimpleMsgElem(SimpleMsg* firstAddress,int numberMsgList);
+    SimpleMsg* newSimpleMsgElem(SimpleMsg* firstAddress,int numberMsgList,void* addressMsg);
     void deleSimpleMsgElem(SimpleMsg* firstAddress,int numberMsgList);
     //void deleSimpleMsgElem(int year,int month,int day,int numberMsgList);
 
