@@ -5,7 +5,9 @@ using namespace std;
 
 Date::Date(){
     this->nextp=NULL;
-    this->SimpleMsgAddress[5]={0};/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    for(int i=0;i < 5;i++){
+        this->SimpleMsgAddress[i]=NULL;/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+      }
 }
 
 
@@ -72,15 +74,18 @@ void* Date::getSimpleMsgAddress(Date *firstAddress, int year, int month, int day
     return targetAddress->SimpleMsgAddress;
 }
 
-int Date::targetSimpleMsgAddress(Date* targetAddress,void *msgAddress){
-    for(int i=0;i < 5;i++){
+//================================
+int Date::targetSimpleMsgAddress(Date *targetAddress, void *msgAddress){
+    for(int i=0;i < this->locateSimpleMsgAddress(targetAddress);i++){
         if(targetAddress->SimpleMsgAddress[i] == msgAddress){
             return i;
         }
     }
 }
 
-void Date::deleSimpleMsgAddress(Date* targetAddress,int number){
+void Date::deleSimpleMsgAddress(Date* firstAddress,Date* targetAddress,void *msgAddress){
+    int number=this->targetSimpleMsgAddress(targetAddress,msgAddress);
+
     targetAddress->SimpleMsgAddress[number]=0;
     for(int i=number;i < this->locateSimpleMsgAddress(targetAddress);i++){
         if(number < 4){
@@ -88,13 +93,20 @@ void Date::deleSimpleMsgAddress(Date* targetAddress,int number){
         }
     }
     targetAddress->SimpleMsgAddress[4]=0;
+    if(this->locateSimpleMsgAddress(targetAddress) == 0){
+        this->deleDateElem(firstAddress,targetAddress->year,targetAddress->month,targetAddress->day);
+    }
 }
 
 int Date::locateSimpleMsgAddress(Date* targetAddress){
+     //cout<<targetAddress->SimpleMsgAddress[3]<<endl;
     for(int i=0;i < 5;i++){
+        //cout<<targetAddress->SimpleMsgAddress[i]<<"%%%"<<i<<endl;
         if(targetAddress->SimpleMsgAddress[i] == 0){
+//cout<<"((()))"<<endl;
             return i;
         }
+
     }
 }
 
@@ -102,13 +114,17 @@ int Date::locateSimpleMsgAddress(Date* targetAddress){
 
 //================================
 Date* Date::newDateElem(Date *firstAddress, int year, int month, int day){
+
     Date* targetAddress=new Date;
     Date* pLastDate=this->visitListDate(firstAddress);
     pLastDate->nextp=targetAddress;
     targetAddress->year=year;
     targetAddress->month=month;
     targetAddress->day=day;
+
     return targetAddress;
+
+
 }
 
 Date* Date::newDateElem(Date* firstAddress,int year, int month, int day, void *addressMsg){

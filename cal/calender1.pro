@@ -20,11 +20,13 @@ SOURCES += main.cpp \
     Ui.cpp \
     Note.cpp \
     Date.cpp \
-    SimpleMsg.cpp
+    SimpleMsg.cpp \
+    Print.cpp
 
 HEADERS += \
     Calculate.h \
     Ui.h \
     Note.h \
     Date.h \
-    SimpleMsg.h
+    SimpleMsg.h \
+    Print.h

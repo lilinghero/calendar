@@ -11,8 +11,8 @@ class Note
 
     void putElem(int year,int month,int day,int numberMsgList);
 
-    SimpleMsg* deleAddress(int year,int month,int day,int number);
-    Date* deleAddress(int numberMsgList,int number);
+    SimpleMsg* getMsgPointer(Date* firstAddress,int year,int month,int day,int numberAddress);
+    Date* getDatePointer(SimpleMsg* firstAddress,int numberMsgList,int numberAddress);
 
     void deleElem(int year,int month,int day);
     void deleElem(int numberMsgList);

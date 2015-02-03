@@ -16,8 +16,9 @@ public:
     SimpleMsg* locatePriorListSimpeMsg(SimpleMsg* firstAddress,int numberMsgList);
     //================================
     void* getDateAddress(SimpleMsg* firstAddress,int numberMsgList);
-    int targetDateAddress(SimpleMsg* targetAddress,void* dateAddress);
-    void deleDateAddress(SimpleMsg* targetAddress, int number);
+    //================================
+    int targetDateAddress(SimpleMsg* targetAddress, void* dateAddress);
+    void deleDateAddress(SimpleMsg* firstAddress,SimpleMsg* targetAddress, void* dateAddress);
     int locateDateAddress(SimpleMsg* targetAddress);
     //================================
     int getMsgPosition(string siMsg);

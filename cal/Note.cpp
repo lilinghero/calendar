@@ -12,14 +12,18 @@ Note::Note(){
 void Note::putElem(int year, int month, int day, int numberMsgList){
     Date* date;
     SimpleMsg* msg;
-
     Date* targetDateAddress=this->pHeadDate->locateListDate(this->pHeadDate,year,month,day);
     SimpleMsg* targetSimpleMsgAddress=this->pHeadSimpMsg->locateListSimpeMsg(this->pHeadSimpMsg,numberMsgList);
-    int orderSimpleMsgAddress=this->pHeadDate->locateSimpleMsgAddress(targetDateAddress);
-    int orderDateAddress=this->pHeadSimpMsg->locateDateAddress(targetSimpleMsgAddress);
-
+    int orderSimpleMsgAddress;
+    int orderDateAddress;
+    if(targetDateAddress != 0){
+        orderSimpleMsgAddress=this->pHeadDate->locateSimpleMsgAddress(targetDateAddress);
+    }
+    if(targetSimpleMsgAddress != 0){
+        orderDateAddress=this->pHeadSimpMsg->locateDateAddress(targetSimpleMsgAddress);
+    }
     if(!targetDateAddress && !targetSimpleMsgAddress){
-
+        cout<<"^^123123"<<endl;
         date=this->pHeadDate->newDateElem(this->pHeadDate,year,month,day);
         msg=this->pHeadSimpMsg->newSimpleMsgElem(this->pHeadSimpMsg,numberMsgList);
 
@@ -27,65 +31,51 @@ void Note::putElem(int year, int month, int day, int numberMsgList){
         msg->dateAddress[0]=date;
 
     }else if (targetSimpleMsgAddress && !targetDateAddress) {
-
+         cout<<"@123123"<<endl;
         date=this->pHeadDate->newDateElem(this->pHeadDate,year,month,day,targetSimpleMsgAddress);
         targetSimpleMsgAddress->dateAddress[orderDateAddress]=date;
+        //cout<<orderDateAddress<<endl;
 
     }else if (targetDateAddress && !targetSimpleMsgAddress) {
-
+         cout<<"#123123"<<endl;
         msg=this->pHeadSimpMsg->newSimpleMsgElem(this->pHeadSimpMsg,numberMsgList,targetDateAddress);
         targetDateAddress->SimpleMsgAddress[orderSimpleMsgAddress]=msg;
-
+        //cout<<orderDateAddress<<endl;
     }else if(targetDateAddress && targetSimpleMsgAddress){
-
+         cout<<"$123123"<<endl;
         cout<<"you don't need this set! Becaurse you had it setted befor"<<endl;
 
     }
 }
 
-SimpleMsg* Note::deleAddress(int year, int month, int day, int number){
-    void * msgDefaultAddress=this->pHeadDate->getSimpleMsgAddress(this->pHeadDate,year,month,day);
-    Date* targetAddress=this->pHeadDate->locateListDate(this->pHeadDate,year,month,day);
-    SimpleMsg** msgInitialAddress=reinterpret_cast<SimpleMsg**>(msgDefaultAddress+number);;/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+SimpleMsg* Note::getMsgPointer(Date *firstAddress, int year, int month, int day, int numberAddress){
+    void * msgDefaultAddress=firstAddress->getSimpleMsgAddress(firstAddress,year,month,day);
+    SimpleMsg** msgInitialAddress=reinterpret_cast<SimpleMsg**>(msgDefaultAddress+numberAddress);;/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     SimpleMsg* msg=*msgInitialAddress;
-    int positionDateAddress=msg->targetDateAddress(msg,targetAddress);
-    this->pHeadSimpMsg->deleDateAddress(msg,positionDateAddress);
     return msg;
 }
 
-Date* Note::deleAddress(int numberMsgList, int number){
-    void* dateDefaultAddress=this->pHeadSimpMsg->getDateAddress(this->pHeadSimpMsg,numberMsgList);
-    SimpleMsg* targetAddress=this->pHeadSimpMsg->locateListSimpeMsg(this->pHeadSimpMsg,numberMsgList);
-    Date** dateInitialAddress=reinterpret_cast<Date**>(dateDefaultAddress+number);;/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+Date* Note::getDatePointer(SimpleMsg *firstAddress, int numberMsgList, int numberAddress){
+    void* dateDefaultAddress=firstAddress->getDateAddress(firstAddress,numberMsgList);
+    Date** dateInitialAddress=reinterpret_cast<Date**>(dateDefaultAddress+numberAddress);;/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     Date* date=*dateInitialAddress;
-    int positionSimpleMsgAddress=this->pHeadDate->targetSimpleMsgAddress(date,targetAddress);
-    this->pHeadDate->deleSimpleMsgAddress(date,positionSimpleMsgAddress);
     return date;
 }
 
-
 void Note::deleElem(int year, int month, int day){
-    SimpleMsg* msg;
-    Date* deletAddress=this->pHeadDate->locateListDate(this->pHeadDate,year,month,day);
-    for(int i=0;i < this->pHeadDate->locateSimpleMsgAddress(deletAddress);i++){
-        msg=this->deleAddress(year,month,day,i);
-        if(this->pHeadSimpMsg->locateDateAddress(msg) == 0){
-            int positionMsg=this->pHeadSimpMsg->getMsgPosition(msg->siMsg);
-            this->pHeadSimpMsg->deleSimpleMsgElem(this->pHeadSimpMsg,positionMsg);
-        }
+    Date* targetAddress=this->pHeadDate->locateListDate(this->pHeadDate,year,month,day);
+    for(int i=0;i < this->pHeadDate->locateSimpleMsgAddress(targetAddress);i++){
+        SimpleMsg* msg=this->getMsgPointer(this->pHeadDate,year,month,day,i);
+        this->pHeadSimpMsg->deleDateAddress(this->pHeadSimpMsg,msg,targetAddress);
     }
-    this->pHeadDate->deleDateElem(deletAddress,year,month,day);
+    this->pHeadDate->deleDateElem(this->pHeadDate,year,month,day);
 }
 
 void Note::deleElem(int numberMsgList){
-    Date* date;
-    SimpleMsg* deleAddress=this->pHeadSimpMsg->locateListSimpeMsg(this->pHeadSimpMsg,numberMsgList);
-
-    for(int i=0;i < this->pHeadSimpMsg->locateDateAddress(deleAddress);i++){
-        date=this->deleAddress(numberMsgList,i);
-        if(this->pHeadDate->locateSimpleMsgAddress(date) == 0){
-            this->pHeadDate->deleDateElem(this->pHeadDate,date->year,date->month,date->day);
-        }
+    SimpleMsg* targetAddress=this->pHeadSimpMsg->locateListSimpeMsg(this->pHeadSimpMsg,numberMsgList);
+    for(int i=0;i < this->pHeadSimpMsg->locateDateAddress(targetAddress);i++){
+        Date* date=this->getDatePointer(this->pHeadSimpMsg,numberMsgList,i);
+        this->pHeadDate->deleSimpleMsgAddress(this->pHeadDate,date,targetAddress);
     }
     this->pHeadSimpMsg->deleSimpleMsgElem(this->pHeadSimpMsg,numberMsgList);
 }
@@ -95,15 +85,10 @@ void Note::deleElem(int year, int month, int day, int numberMsgList){
     SimpleMsg* targetSimpleMsgAddress=this->pHeadSimpMsg->locateListSimpeMsg(this->pHeadSimpMsg,numberMsgList);
     int dateNumber=this->pHeadSimpMsg->targetDateAddress(targetSimpleMsgAddress,targetDateAddress);
     int simpleMsgNumber=this->pHeadDate->targetSimpleMsgAddress(targetDateAddress,targetSimpleMsgAddress);
-    this->deleAddress(year,month,day,simpleMsgNumber);
-    this->deleAddress(numberMsgList,dateNumber);
-    if(this->pHeadSimpMsg->locateDateAddress(targetSimpleMsgAddress) == 0){
-        int positionMsg=this->pHeadSimpMsg->getMsgPosition(targetSimpleMsgAddress->siMsg);
-        this->pHeadSimpMsg->deleSimpleMsgElem(this->pHeadSimpMsg,positionMsg);
-    }
-    if(this->pHeadDate->locateSimpleMsgAddress(targetDateAddress) == 0){
-        this->pHeadDate->deleDateElem(this->pHeadDate,targetDateAddress->year,targetDateAddress->month,targetDateAddress->day);
-    }
+    SimpleMsg* msg=this->getMsgPointer(this->pHeadDate,year,month,day,simpleMsgNumber);
+    Date* date=this->getDatePointer(this->pHeadSimpMsg,numberMsgList,dateNumber);
+    this->pHeadSimpMsg->deleDateAddress(this->pHeadSimpMsg,msg,targetDateAddress);
+    this->pHeadDate->deleSimpleMsgAddress(this->pHeadDate,date,targetSimpleMsgAddress);
 }
 
 void Note::clearSingleList(Date *pHeadDate){

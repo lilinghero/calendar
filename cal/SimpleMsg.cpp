@@ -45,7 +45,7 @@ int SimpleMsg::lengthList(SimpleMsg* firstAddress){
 SimpleMsg* SimpleMsg::locateListSimpeMsg(SimpleMsg* firstAddress,int numberMsgList){
     if(firstAddress->siMsg == this->Msg[numberMsgList]){
         return firstAddress;
-    }else if(firstAddress->siMsg != this->Msg[numberMsgList] && firstAddress->nextp) {
+    }else if(firstAddress->siMsg != this->Msg[numberMsgList] && firstAddress->nextp == NULL) {
         return NULL;;/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     }else{
         return this->locateListSimpeMsg(firstAddress->nextp,numberMsgList);
@@ -70,15 +70,17 @@ void* SimpleMsg::getDateAddress(SimpleMsg *firstAddress, int numberMsgList){
     return targetAddress->dateAddress;
 }
 
-int SimpleMsg::targetDateAddress(SimpleMsg* targetAddress, void *dateAddress){
-    for(int i=0;i < 20;i++){
+int SimpleMsg::targetDateAddress(SimpleMsg *targetAddress, void *dateAddress){
+    for(int i=0;i < this->locateDateAddress(targetAddress);i++){
         if(targetAddress->dateAddress[i] == dateAddress){
             return i;
         }
     }
 }
 
-void SimpleMsg::deleDateAddress(SimpleMsg* targetAddress, int number){
+void SimpleMsg::deleDateAddress(SimpleMsg* firstAddress,SimpleMsg* targetAddress, void *dateAddress){
+    int number=this->targetDateAddress(targetAddress,dateAddress);
+
     targetAddress->dateAddress[number]=0;
     for(int i=number;i < this->locateDateAddress(targetAddress);i++){
         if(number < 19){
@@ -86,6 +88,10 @@ void SimpleMsg::deleDateAddress(SimpleMsg* targetAddress, int number){
         }
     }
     targetAddress->dateAddress[19]=0;
+    if(this->locateDateAddress(targetAddress) == 0){
+        int positionMsg=this->getMsgPosition(targetAddress->siMsg);
+        this->deleSimpleMsgElem(firstAddress,positionMsg);
+    }
 }
 
 int SimpleMsg::locateDateAddress(SimpleMsg* targetAddress){

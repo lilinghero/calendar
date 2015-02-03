@@ -16,8 +16,9 @@ public:
     Date* locatePriorListDate(Date* firstAddress,int year, int month, int day);
     //================================
     void* getSimpleMsgAddress(Date* firstAddress,int year,int month,int day);
+    //================================
     int targetSimpleMsgAddress(Date* targetAddress,void * msgAddress);
-    void deleSimpleMsgAddress(Date* targetAddress,int number);
+    void deleSimpleMsgAddress(Date* firstAddress,Date* targetAddress,void * msgAddress);
     int locateSimpleMsgAddress(Date* targetAddress);
     //================================
     Date* newDateElem(Date* firstAddress,int year,int month,int day);
